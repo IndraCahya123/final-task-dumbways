@@ -4,7 +4,8 @@ export const ModalContext = createContext();
 
 const initialValues = {
     showedLogin: false,
-    showedRegister: false
+    showedRegister: false,
+    showedTemplate: false,
 };
 
 const reducer = (state, action) => {
@@ -44,6 +45,16 @@ const reducer = (state, action) => {
                 showedLogin: true,
                 showedRegister: false,
             }
+        case "SHOW_TEMPLATE":
+            return {
+                ...state,
+                showedTemplate: true
+            };
+        case "CLOSE_TEMPLATE":
+            return {
+                ...state,
+                showedTemplate: false
+            };
     
         default:
             throw new Error();

@@ -8,7 +8,7 @@ function TopPage(props) {
             display: "flex",
             alignItems: "center"
         }}>
-            <h4 style={{  }}>{ props.menu }</h4>
+            <h4>{ props.menu }</h4>
         </div>
     )
 }

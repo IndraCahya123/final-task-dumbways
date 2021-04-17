@@ -1,25 +1,92 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Form, Col } from "react-bootstrap";
 import { useMutation } from 'react-query';
 import swal from 'sweetalert';
 import uniqueString from 'unique-string';
 
+import { ModalContext } from '../../contexts/modalContext';
+import { TemplateContext } from '../../contexts/templateContext';
+
 import { APIURL } from '../../api/integration';
 
 import FileButtonLink from '../micro/FileButtonLink';
 import FileButtonBrand from '../micro/FileButtonBrand';
+import ModalTemplate from '../modal/ModalTemplate';
+
+import Template1 from '../../images/Phone.png';
+import Template2 from '../../images/Phone1.png';
+import Template3 from '../../images/Phone2.png';
+import Template4 from '../../images/Phone3.png';
+import DefaultImage from '../../images/defaultImg.png';
 
 function CreateLink(props) {
     const history = useHistory();
+
+    const [modalTemplate, setModalTemplate] = useContext(ModalContext);
+    const [setTemplate, changeTemplate] = useContext(TemplateContext);
 
     const [form, setForm] = useState({
         titleDetail: "",
         description: "",
         imageBrand: null,
-        templateId: props.template,
+        templateId: setTemplate.templateId,
         links: []
     });
+console.log(form.templateId);
+    const { titleDetail, description, imageBrand, links } = form;
+
+    const templatePreview = (id) => {
+        switch (id) {
+            case 1:
+                return (
+                    <>
+                        <button type="button" className="btn btn-dark" style={{ background: "none", border: "none" }} onClick={() => setModalTemplate({type: "SHOW_TEMPLATE"})} >
+                            <img
+                                src={Template1}
+                                alt="Template 1"
+                            />
+                        </button>
+                    </>
+                );
+            case 2:
+                return (
+                    <>
+                        <button type="button" className="btn btn-dark" style={{ background: "none", border: "none" }} onClick={() => setModalTemplate({type: "SHOW_TEMPLATE"})} >
+                            <img
+                                src={Template2}
+                                alt="Template 2"
+                            />
+                        </button>
+                    </>
+                );
+            case 3:
+                return (
+                    <>
+                        <button type="button" className="btn btn-dark" style={{ background: "none", border: "none" }} onClick={() => setModalTemplate({type: "SHOW_TEMPLATE"})} >
+                            <img
+                                src={Template3}
+                                alt="Template 3"
+                            />
+                        </button>
+                    </>
+                );
+            case 4:
+                return (
+                    <>
+                        <button type="button" className="btn btn-dark" style={{ background: "none", border: "none" }} onClick={() => setModalTemplate({type: "SHOW_TEMPLATE"})} >
+                            <img
+                                src={Template4}
+                                alt="Template 4"
+                            />
+                        </button>
+                    </>
+                );
+        
+            default:
+                break;
+        }
+    } 
 
     const [link, setLink] = useState({
         titleLink: "",
@@ -28,15 +95,12 @@ function CreateLink(props) {
     });
 
     const [imgLinkPreview, setImageLinkPreview] = useState({
-        preview: null,
+        preview: DefaultImage,
     })
 
     const [imgBrandPreview, setImageBrandPreview] = useState({
-        preview: null,
+        preview: DefaultImage,
     })
-
-    console.log("brand", imgBrandPreview);
-    console.log("link", imgLinkPreview);
 
     const { titleLink, url, imageLink } = link;
 
@@ -173,15 +237,24 @@ function CreateLink(props) {
     }
 
     return (
-        <div className="d-flex flex-column p-4" style={{
+        <div className="d-flex flex-column" style={{
             background: "#E5E5E5",
-            height: "calc(100vh - 64px)"
+            height: "calc(100vh - 64px)",
+            position: 'relative',
+            padding: "20px 40px 20px 70px"
         }}>
             <div className="top d-flex justify-content-between align-items-center" style={{ marginBottom: 50 }}>
                 <span style={{ fontFamily: "'Times New Roman'", fontWeight: "bold", fontSize: 30 }}>Create Link</span>
-                <button type="button" className="btn btn-dark" style={{ backgroundColor: "#FF9F00", border: "none", marginRight: 50 }} onClick={() => addDetailLink.mutate()}>Publish Link</button>
+                <div>
+                    {titleDetail == "" || description == "" || imageBrand == null || links.lenght < 2 ?
+                        <button type="button" className="btn btn-dark" style={{ backgroundColor: "#FF9F00", border: "none", marginRight: 20 }} disabled>Publish Link</button>
+                        :
+                        <button type="button" className="btn btn-dark" style={{ backgroundColor: "#FF9F00", border: "none", marginRight: 20 }} onClick={() => addDetailLink.mutate()}>Publish Link</button>
+                    }
+                    <button type="button" className="btn btn-dark" style={{ background: "#FF9F00", border: "none" }} onClick={() => changeTemplate({type: "MAIN_ROUTE"})}>Go Back</button>
+                </div>
             </div>
-            <div className="content d-flex" style= {{  }}>
+            <div className="content d-flex justify-content-between">
                 <div className="form-addLink d-flex flex-column" style={{ height: 450, overflow: "auto", background: "#fff", padding: 20, borderRadius: 10}}>
                     <Form encType="multipart/form-data">
                         <Form.Row>
@@ -218,7 +291,8 @@ function CreateLink(props) {
                                                 </div>
                                                 <div className="d-flex flex-column">
                                                     <span style={{ fontFamily: "'Times New Roman'", fontSize: 20, marginBottom: 5 }}>{ item.titleLink }</span>
-                                                    <span>{item.url}</span><span>{ item.image?.name }</span>
+                                                    <span>{item.url}</span>
+                                                    <span>{item.imageLink?.name}</span>
                                                 </div>
                                             </div>
                                         </>
@@ -263,7 +337,14 @@ function CreateLink(props) {
                         </Form>
                     </div>
                 </div>
+                <div className="template-preview" style={{ marginRight: 120 }}>
+                    {templatePreview(form.templateId)}
+                </div>
             </div>
+            <div style={{ position: 'absolute', bottom: 30, right: 30 }}>
+                
+            </div>
+            <ModalTemplate changeTemplate={setForm} setTemplate={form} />
         </div>
     )
 }

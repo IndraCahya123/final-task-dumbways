@@ -46,7 +46,7 @@ function ModalRegister() {
 
         setAuthToken(res.data.data.user.token);
 
-        swal("Your Registration Success", "success", {
+        swal("Registration Success", "Welcome New User", "success", {
             buttons: {
                 confirm: {text: "OK", className: "sweet-yellow"}
             }
@@ -105,7 +105,7 @@ function ModalRegister() {
                     {userRegister.isLoading ? "Wait.." : "Register"}
                     </Button>
                 </Form>
-                <p style={{ color: "#B1B1B1", fontFamily: "'Nunito Sans'", textAlign: "center", marginTop: 10, marginBottom: 0 }}>Already Have an Account ? <span style={{ fontWeight: "Bolder", cursor: "pointer" }} onClick={changeToLogin}>Login</span></p>
+                <p style={{ color: "#000", fontFamily: "'Nunito Sans'", textAlign: "center", marginTop: 10, marginBottom: 0 }}>Already Have an Account ? <span style={{ fontWeight: "Bolder", cursor: "pointer" }} onClick={changeToLogin}>Login</span></p>
             </Modal.Body>
         </Modal>
     );

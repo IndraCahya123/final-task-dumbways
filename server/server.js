@@ -20,4 +20,6 @@ app.get("/", (req, res) => {
     res.send("Server is running successfully");
 });
 
+app.use("/uploadedImages", express.static("uploadedImages"));
+
 app.listen(portServer, () => console.log(`Your server is running at port:${portServer}`));

@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import './App.css';
 
 import { ModalContextProvider } from './contexts/modalContext';
-import { MenuContextProvider } from './contexts/menuContext';
+import { TemplateContextProvider } from './contexts/templateContext';
 
 import { UserContext } from './contexts/userContext';
 
@@ -13,6 +13,7 @@ import Home from './pages/Landing';
 import Template from './pages/Template';
 import Profile from './pages/Profile';
 import MyLink from './pages/MyLink';
+import TemplatePreview from './pages/TemplatePreview';
 
 import Navbar from './components/macro/Navbar';
 
@@ -53,7 +54,6 @@ function App() {
         type: "AUTH_ERROR",
       });
     }
-    console.log(stateUser);
   };
 
   useEffect(() => {
@@ -64,7 +64,7 @@ function App() {
     <div className={stateUser.loginStatus ? "d-flex" : ""}>
       <QueryClientProvider client={queryClient}>
         <ModalContextProvider>
-          <MenuContextProvider>
+          <TemplateContextProvider>
             <Router>
               <Navbar />
                 <Switch>
@@ -72,9 +72,10 @@ function App() {
                   <Route exact path="/" component={Home} />}
                   <LoginPrivateRoute exact path="/profile" component={Profile} />
                   <LoginPrivateRoute exact path="/my-link" component={MyLink} />
+                  <LoginPrivateRoute exact path="/preview/:templateId/:uniqueLink" component={TemplatePreview} />
                 </Switch>
             </Router>
-          </MenuContextProvider>
+          </TemplateContextProvider>
         </ModalContextProvider>
       </QueryClientProvider>
     </div>

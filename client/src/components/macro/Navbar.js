@@ -4,7 +4,6 @@ import { Navbar, Nav, Form } from 'react-bootstrap';
 
 import { ModalContext } from '../../contexts/modalContext';
 import { UserContext } from '../../contexts/userContext';
-import { MenuContext } from '../../contexts/menuContext';
 
 import ModalLogin from '../modal/ModalLogin';
 import ModalRegister from '../modal/ModalRegister';
@@ -33,7 +32,7 @@ function MyNavbar() {
                         justifyContent: "flex-start",
                         alignItems: "center"
                     }}>
-                <Navbar.Brand>
+                <Navbar.Brand as={Link} to="/template">
                     <img
                         src={Brand}
                         alt="Brand"

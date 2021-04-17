@@ -1,8 +1,7 @@
-function Template1(props) {
+function Template2(props) {
     const brand = props.brand;
-    console.log(brand);
     return (
-        <div className="d-flex align-items-center flex-column w-25 p-2" style={{ background: "#E5E5E5", height: 400 }}>
+        <div className="d-flex align-items-center flex-column w-25 p-2" style={{backgroundColor: "rgba(255,255,255,0.3)", height: 400}}>
             <img
                 src={brand.image}
                 alt="Image Brand"
@@ -24,7 +23,7 @@ const LinkPreviewCard = (props) => {
 
     return (
         <>
-            <div className="d-flex align-items-center w-100 mb-3 p-2" style={{ position: "relative", cursor: "pointer", background: "#000", color: "#fff", borderRadius: 5 }}>
+            <div className="d-flex align-items-center bg-light w-100 mb-3 p-2" style={{ position: "relative", cursor: "pointer", borderRadius: "25px" }}>
                 <img
                     src={link.image}
                     alt="Link Image"
@@ -39,4 +38,5 @@ const LinkPreviewCard = (props) => {
     );
 }
 
-export default Template1
+
+export default Template2

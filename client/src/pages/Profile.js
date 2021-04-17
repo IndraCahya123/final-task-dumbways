@@ -40,16 +40,6 @@ function Profile() {
             [name]: value
         });
     };
-    
-    const onSubmit = () => {
-        if (editProfile.isError) {
-            swal("There's error", "error")
-        } else {
-            swal("Profile Updated").then(() => {
-                refetch();
-            });
-        }
-    }
 
     const onDelete = () => {
         swal("Are you sure want to delete you account ?", {
@@ -111,6 +101,14 @@ function Profile() {
     
         await APIURL.patch(`/user`, body, config);
         refetch();
+
+        swal("Data Updated", "You success to update your data profile", "success",
+            {
+            buttons: {
+                confirm: { text: "OK", className: "sweet-yellow" }
+            }
+        })
+
     });
 
     const deleteProfile = useMutation(async () => {
@@ -129,22 +127,23 @@ function Profile() {
                 padding: 50,
                 height: "calc(100vh - 64px)"
             }}>
-                <p style={{ fontFamily: "'Times New Roman'", fontSize: 30, marginBottom: 40 }}>My Information</p>
+                <p style={{ fontFamily: "'Times New Roman'", fontSize: 30, marginBottom: 40, marginLeft: 20 }}>My Information</p>
                 <div className="contact-card" style={{
                     background: "#fff",
-                    width: "100%",
+                    width: "95%",
                     borderRadius: 5,
                     display: "flex",
                     flexDirection: "column",
                     padding: 20,
-                    marginBottom: 40
+                    marginBottom: 40,
+                    marginLeft: 20,
                 }}>
                     <label style={{ color: "#7E7A7A", marginBottom: 20 }}>Fullname</label>
                     <input onChange={(e) => onChange(e)} className="myinput" name="fullname" style={{ borderBottom: "1px solid #7E7A7A", borderTop: "none", borderLeft: "none", borderRight: "none", marginBottom: 40, paddingBottom: 5 }} type="text" value={formEdit.fullname} />
                     <label style={{ color: "#7E7A7A", marginBottom: 20 }}>Email</label>
                     <input onChange={(e) => onChange(e)} className="myinput" name="email" style={{ borderBottom: "1px solid #7E7A7A", borderTop: "none", borderLeft: "none", borderRight: "none", marginBottom: 40, paddingBottom: 5 }} type="email" value={formEdit.email} />
                 </div>
-                <div className="align-self-end">
+                <div className="align-self-end" style={{ marginRight: 30 }}>
                     <button type="button" style={{
                         background: "#FF9F00",
                         marginRight: 15,

@@ -120,11 +120,20 @@ exports.editUser = async (req, res) => {
             }
         });
 
+        const userDataUpdated = await User.findOne({
+            where: {
+                id,
+            },
+            attributes: {
+                exclude: [ "password", "createdAt", "updatedAt"]
+            }
+        });
+
         res.send({
             status: "success",
             message: "Update Success",
             data: {
-                user : userUpdated
+                user : userDataUpdated
             }
         });
     } catch (error) {
